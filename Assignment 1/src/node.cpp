@@ -48,6 +48,7 @@ float node::calc_entropy()
 {
     float ppos=npost/(npost+nnegt), pneg=nnegt/(npost+nnegt);
     entropy= -ppos* log2(ppos)-pneg* log2(pneg);
+
     return entropy;
 }
 

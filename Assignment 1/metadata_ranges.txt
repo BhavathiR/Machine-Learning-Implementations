@@ -1,0 +1,8 @@
+Age 17-90
+FNLWGT 12285 - 1484705
+Ed-no 1 - 16
+Capital Gain 0 - 99999
+Captal Loss 0 - 4356
+hpw 1 - 99
+
+?- Age, Workclass,Occupation, HPW, Native_country

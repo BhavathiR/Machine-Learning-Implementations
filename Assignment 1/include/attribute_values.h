@@ -16,7 +16,7 @@ const static vector<string> temp_relationship= {"Wife", "Own-child", "Husband", 
 const static vector<string> temp_race= {"White", "Asian-Pac-Islander", "Amer-Indian-Eskimo", "Other", "Black"};
 const static vector<string> temp_sex= {"Female", "Male"};
 const static vector<string> temp_native_country= {"United-States", "Cambodia", "England", "Puerto-Rico", "Canada", "Germany", "Outlying-US(Guam-USVI-etc)", "India", "Japan", "Greece", "South", "China", "Cuba", "Iran", "Honduras", "Philippines", "Italy", "Poland", "Jamaica", "Vietnam", "Mexico", "Portugal", "Ireland", "France", "Dominican-Republic", "Laos", "Ecuador", "Taiwan", "Haiti", "Columbia", "Hungary", "Guatemala", "Nicaragua", "Scotland", "Thailand", "Yugoslavia", "El-Salvador", "Trinadad&Tobago", "Peru", "Hong", "Holand-Netherlands"};
-static map <string, vector<string> > disc_attributes = { make_pair("workclass", temp_workclass),
+static map <string, vector<string> > disc_values = { make_pair("workclass", temp_workclass),
                                 make_pair("education",temp_education),
                                 make_pair("marital-status", temp_marital_status),
                                 make_pair("occupation", temp_occupation),
@@ -25,6 +25,6 @@ static map <string, vector<string> > disc_attributes = { make_pair("workclass", 
                                 make_pair("sex", temp_sex),
                                 make_pair("native-country", temp_native_country)};
 static map<string,bool> dclassify = {make_pair(">50K",true),make_pair("<=50K",false)};
-static vector <string> cont_attributes = {"age","fnlwgt", "education-num", "capital-gain", "capital-loss", "hours-per_week"};
+static vector <string> cont_values = {"age","fnlwgt", "education-num", "capital-gain", "capital-loss", "hours-per_week"};
 
 #endif // ATTRIBUTE_VALUES_H_INCLUDED

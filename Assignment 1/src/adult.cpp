@@ -9,14 +9,14 @@ adult::adult(int age, string workclass, int fnlwgt, string education, int educat
         cont_attr["fnlwgt"] = fnlwgt;
         disc_attr["education"] = education;
         cont_attr["education-num"] = education_num;
-        disc_attr["marital_status"] = marital_status;
+        disc_attr["marital-status"] = marital_status;
         disc_attr["occupation"] = occupation;
         disc_attr["relationship"] = relationship;
         disc_attr["race"] = race;
         disc_attr["sex"] = sex;
         cont_attr["capital-gain"] = capital_gain;
         cont_attr["capital-loss"] = capital_loss;
-        cont_attr["hours-per_week"] = hours_per_week;
+        cont_attr["hours-per-week"] = hours_per_week;
         disc_attr["native-country"] = native_country;
         disc_attr["salary"] = salary;
 }

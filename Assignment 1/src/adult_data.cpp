@@ -1,8 +1,7 @@
 #include "adult_data.h"
-#include <iostream>
 #include <fstream>
 #include <my_ctype.h>
-
+#include <iostream>
 using namespace std;
 
 
@@ -25,23 +24,20 @@ adult_data::adult_data(string file)
         int capital_gain, capital_loss, hours_per_week;
         string native_country;
         string salary;
-        int a[15]={0};
-        int i=0;
+//        int i=0;
 
     while(!fin.eof())
     {
         fin>>age>>workclass>>fnlwgt>>education>>education_num>>marital_status>>occupation>>relationship>>race>>sex>>capital_gain>>capital_loss>>hours_per_week>>native_country>>salary;
-        cout<<++i<<' '<<age<<workclass<<fnlwgt<<education<<education_num<<marital_status<<occupation<<relationship<<race<<sex<<capital_gain<<capital_loss<<hours_per_week<<native_country<<salary<<endl;
+//        cout<<++i<<' '<<age<<workclass<<fnlwgt<<education<<education_num<<marital_status<<occupation<<relationship<<race<<sex<<capital_gain<<capital_loss<<hours_per_week<<native_country<<salary<<endl;
 
         adult ad(age,workclass,fnlwgt,education,education_num,marital_status,occupation,relationship,race,sex,capital_gain,capital_loss,hours_per_week,native_country,salary);
         data.push_back(ad);
         n++;
     }
-        for(int i=0; i<15;++i) cout<<a[i]<<endl;
 
-//    cout<<n;
     fin.close();
-        cout<<data.size()<<endl;
+//        cout<<data.size()<<endl;
 }
 
 adult_data::~adult_data()
@@ -60,6 +56,6 @@ void adult_data::parse()
         else
             root.add_neg(&(*it));
     }
-    root.calc_entropy();
+    cout<<root.calc_entropy();
     root.calc_split();
 }

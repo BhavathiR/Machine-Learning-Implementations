@@ -46,8 +46,9 @@ void node::setbit(bitset<15> b)
 
 float node::calc_entropy()
 {
-    float ppos=npost/(npost+nnegt), pneg=nnegt/(npost+nnegt);
+    float ppos=(float)npost/(npost+nnegt), pneg=(float)nnegt/(npost+nnegt);
     entropy= -ppos* log2(ppos)-pneg* log2(pneg);
+    cout<<ppos<<','<<pneg<<',';
 
     return entropy;
 }
@@ -73,34 +74,39 @@ void node:: calc_split()
     int i=0;
     float temp_ent=0, child_ent=entropy;
     string attr;
-    map<string, node> m;
+    map<string, node> temp_children;
     bitset<15> b=checked;
-    for(map<string, vector<string> >::iterator it=disc_attributes.begin(); it!=disc_attributes.end(); i++,it++)
+    cout<<entropy;
+    for(map<string, vector<string> >::iterator it=disc_values.begin(); it!=disc_values.end(); i++,it++)
     {
         if(!checked.test(i))
         {
             attr=it->first;
-            m.clear();
+            temp_children.clear();
             b=checked;
             b.set(i);
             temp_ent=0;
             for(vector<adult*>::iterator jt=pos_list.begin(); jt!=pos_list.end(); ++jt)
-                m[(*jt)->ask_disc(attr)].add_pos(*jt);
+                temp_children[(*jt)->ask_disc(attr)].add_pos(*jt);
             for(vector<adult*>::iterator jt=neg_list.begin(); jt!=neg_list.end(); ++jt)
-                m[(*jt)->ask_disc(attr)].add_neg(*jt);
-            m.erase("?");
+                temp_children[(*jt)->ask_disc(attr)].add_neg(*jt);
+            temp_children.erase("?");
+            cout<<endl<<attr<<":"<<temp_children.size()<<": ";
             for(vector<string>::iterator jt=(it->second).begin(); jt!=(it->second).end(); ++jt)
             {
-                if(m.count(*jt))
+                cout<<(*jt)<<", ";
+                if(temp_children.count(*jt))
                 {
-                    temp_ent+=m[*jt].calc_entropy();
-                    m[*jt].setbit(b);
+                    temp_ent+=temp_children[*jt].calc_entropy();
+                    temp_children[*jt].setbit(b);
                 }
             }
+            cout<<temp_ent;
             if(temp_ent<child_ent)
             {
+                cout<<" Selected";
                 child_ent=temp_ent;
-                children=m;
+                children=temp_children;
                 split_attr=attr;
             }
         }
@@ -111,6 +117,6 @@ void node:: calc_split()
     {
         cout<<it->first<<", ";
     }
-    children_split();
+//    children_split();
 }
 

@@ -61,7 +61,7 @@ void node::children_split()
     cout<<"\n";
 
     for(int i=0; i<ite;++i) cout<<"\t";
-            cout<<it->first<<"->";
+            cout<<it->first;
         (it->second).calc_split(ite+1);
     }
 }
@@ -70,7 +70,7 @@ void node:: calc_split( int in_ite)
 {
     ite=in_ite;
 
-
+    cout<<" ("<<npost<<","<<nnegt<<") "<<"->";
     if(npost==0)
     {
         split_attr="<=50K";

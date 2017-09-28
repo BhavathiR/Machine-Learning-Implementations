@@ -57,5 +57,5 @@ void adult_data::parse()
             root.add_neg(&(*it));
     }
     cout<<root.calc_entropy();
-    root.calc_split();
+    root.calc_split(0);
 }

@@ -1,8 +1,8 @@
 #include "node.h"
-//#include<iostream>
+#include<iostream>
 #include <iterator>
 #include <math.h>
-
+/*
 node::node(vector < adult* > plist, vector < adult* > nlist, int p, int n)
 {
     pos_list=plist;
@@ -13,7 +13,7 @@ node::node(vector < adult* > plist, vector < adult* > nlist, int p, int n)
     calc_entropy();
     calc_split();
 }
-
+*/
 node::node()
 {
     checked=0;
@@ -57,13 +57,20 @@ void node::children_split()
 {
     for(map<string,node>::iterator it=children.begin(); it!=children.end();++it)
     {
-        cout<<endl<<endl<<"Splitting "<<it->first<<" under "<<split_attr;
-        (it->second).calc_split();
+//        cout<<endl<<endl<<"Splitting "<<it->first<<" under "<<split_attr;
+    cout<<"\n";
+
+    for(int i=0; i<ite;++i) cout<<"\t";
+            cout<<it->first<<"->";
+        (it->second).calc_split(ite+1);
     }
 }
 
-void node:: calc_split()
+void node:: calc_split( int in_ite)
 {
+    ite=in_ite;
+
+
     if(npost==0)
     {
         split_attr="<=50K";
@@ -119,11 +126,12 @@ void node:: calc_split()
         }
     }
 
-    cout<<endl<<split_attr<<":\t";
-    for(map<string,node>::iterator it=children.begin(); it!=children.end();++it)
+    cout<<split_attr<<": ";
+/*    for(map<string,node>::iterator it=children.begin(); it!=children.end();++it)
     {
         cout<<it->first<<", ";
     }
+*/
     children_split();
 }
 

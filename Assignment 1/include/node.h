@@ -14,7 +14,7 @@ class node
         node(vector < adult* >, vector < adult* > , int , int );
         node();
         virtual ~node();
-        void calc_split();
+        void calc_split(int);
         void add_pos(adult*);
         void add_neg(adult*);
         float calc_entropy();
@@ -22,7 +22,7 @@ class node
     protected:
 
     private:
-
+        int ite;
         int npost, nnegt;
         bitset<15> checked;
         float entropy;

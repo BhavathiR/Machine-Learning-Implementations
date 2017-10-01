@@ -7,13 +7,16 @@
 class adult_data
 {
     public:
-        adult_data(string);
         virtual ~adult_data();
-        void parse();
+        void parse(string);
+        void prune (string);
+        void check(string);
     protected:
 
     private:
+        void load(string);
         int n;
+        node root;
         vector <adult> data;
 };
 

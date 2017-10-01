@@ -25,6 +25,6 @@ static map <string, vector<string> > disc_values = { make_pair("workclass", temp
                                 make_pair("sex", temp_sex),
                                 make_pair("native-country", temp_native_country)};
 static map<string,bool> dclassify = {make_pair(">50K",true),make_pair("<=50K",false)};
-static vector <string> cont_values = {"age","fnlwgt", "education-num", "capital-gain", "capital-loss", "hours-per_week"};
+static vector <string> cont_values = {"age", "education-num", "capital-gain", "capital-loss", "hours-per-week"};
 
 #endif // ATTRIBUTE_VALUES_H_INCLUDED

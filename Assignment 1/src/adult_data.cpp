@@ -5,9 +5,10 @@
 using namespace std;
 
 
-adult_data::adult_data(string file)
+void adult_data::load(string file)
 {
     n=0;
+    data.clear();
     ifstream fin(file);
     locale x(locale::classic(), new my_ctype);
     fin.imbue(x);
@@ -45,17 +46,46 @@ adult_data::~adult_data()
     //dtor
 }
 
-void adult_data::parse()
+void adult_data::parse(string file)
 {
-    node root;
+    load(file);
     for(vector<adult>::iterator it=data.begin(); it!=data.end(); ++it)
     {
- //       cout<<it->ask_disc("sex")<<endl;
         if(it->ask_class())
             root.add_pos(&(*it));
         else
             root.add_neg(&(*it));
     }
     cout<<root.calc_entropy();
-    root.calc_split(0);
+    root.split(0);
+}
+
+void adult_data::prune(string file)
+{
+    load (file);
+    cout<<endl<<data.size();
+    root.clear();
+    for(vector<adult>::iterator it=data.begin(); it!=data.end(); ++it)
+    {
+        if(it->ask_class())
+            root.add_pos(&(*it));
+        else
+            root.add_neg(&(*it));
+    }
+    cout<<endl<<root.prune()<<endl;
+    root.show(0);
+}
+void adult_data::check(string file)
+{
+    load(file);
+    int i=0;
+    for(vector<adult>::iterator it=data.begin(); it!=data.end(); ++it, ++i)
+    {
+        cout<<endl<<i<<' ';
+        if(it->ask_disc("salary")==">50K")
+            cout<<it->ask_disc("relationship")<<it->ask_disc("education")<<it->ask_cont("capital-gain")<<it->ask_disc("occupation");
+   //     cout<<it->ask_disc("salary");
+
+    }
+
 }

@@ -1,0 +1,5 @@
+<map id="adult_data::random_forest" name="adult_data::random_forest">
+<area shape="rect" id="node2" href="$classnode.html#abf6439eeda3a69c7404abdbe5cc91437" title="node::setbit" alt="" coords="195,5,285,32"/>
+<area shape="rect" id="node3" href="$classnode.html#a6abbca5dc229621e56d22c340d3ffc6d" title="node::add_pos" alt="" coords="187,56,293,83"/>
+<area shape="rect" id="node4" href="$classnode.html#a667df38c43359dee17ea4fc13b52b7c3" title="node::add_neg" alt="" coords="187,107,293,133"/>
+</map>

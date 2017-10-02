@@ -1,0 +1,64 @@
+# depslib dependency file v1.0
+1506962238 source:c:\users\umesh\documents\github\machine-learning-implementations\assignment 1\main.cpp
+	<adult_data.h>
+	<hyperparameters.h>
+
+1506945500 source:c:\users\umesh\documents\github\machine-learning-implementations\assignment 1\src\adult.cpp
+	"adult.h"
+
+1506958445 c:\users\umesh\documents\github\machine-learning-implementations\assignment 1\include\adult.h
+	<attribute_values.h>
+	<vector>
+	<string>
+	<map>
+
+1506962522 source:c:\users\umesh\documents\github\machine-learning-implementations\assignment 1\src\adult_data.cpp
+	"adult_data.h"
+	<fstream>
+	<my_ctype.h>
+	<iostream>
+	<bitset>
+	<stdlib.h>
+	<time.h>
+	<hyperparameters.h>
+
+1506958417 c:\users\umesh\documents\github\machine-learning-implementations\assignment 1\include\adult_data.h
+	<vector>
+	<string>
+	<node.h>
+
+1506945328 c:\users\umesh\documents\github\machine-learning-implementations\assignment 1\include\my_ctype.h
+	<locale>
+	<algorithm>
+
+1506945334 source:c:\users\umesh\documents\github\machine-learning-implementations\assignment 1\src\my_ctype.cpp
+	"my_ctype.h"
+
+1506962851 source:c:\users\umesh\documents\github\machine-learning-implementations\assignment 1\src\node.cpp
+	"node.h"
+	<iostream>
+	<iterator>
+	<math.h>
+	<set>
+	<algorithm>
+
+1506958606 c:\users\umesh\documents\github\machine-learning-implementations\assignment 1\include\node.h
+	<adult.h>
+	<utility>
+	<vector>
+	<map>
+	<bitset>
+
+1506246145 source:c:\users\umesh\documents\github\machine-learning-implementations\assignment 1\src\split_entropy.cpp
+	"split_entropy.h"
+
+1506246145 c:\users\umesh\documents\github\machine-learning-implementations\assignment 1\include\split_entropy.h
+
+1506945358 c:\users\umesh\documents\github\machine-learning-implementations\assignment 1\include\attribute_values.h
+	<vector>
+	<map>
+	<string>
+	<utility>
+
+1506961465 c:\users\umesh\documents\github\machine-learning-implementations\assignment 1\include\hyperparameters.h
+

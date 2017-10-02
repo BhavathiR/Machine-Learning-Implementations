@@ -73,12 +73,13 @@ float node::calc_entropy()
 void node::split(int in_ite)
 {
     ite=in_ite;
-//    cout<<" ("<<npost<<","<<nnegt<<") "<<"->";
+    cout<<" ("<<npost<<","<<nnegt<<") "<<"->";
 
 
     if(npost==0)
     {
         split_type_disc=true;
+        end_of_tree=true;
         disc_split_attr="<=50K";
 //        cout<<disc_split_attr;
         return;
@@ -86,6 +87,7 @@ void node::split(int in_ite)
     else if(nnegt==0)
     {
         split_type_disc=true;
+        end_of_tree=true;
         disc_split_attr=">50K";
 //        cout<<disc_split_attr;
         return;
@@ -118,6 +120,22 @@ void node::split(int in_ite)
     }
     else
     {
+        if(cont_split_attr=="Noise")
+        {
+            disc_children.clear();
+            split_type_disc=true;
+            if(npost>nnegt)
+            {
+                end_of_tree=true;
+                disc_split_attr=">50K";
+            }
+            else
+            {
+                end_of_tree=true;
+                disc_split_attr="<=50K";
+            }
+            return;
+        }
         cout<<cont_split_attr<<": ";
         disc_children.clear();
 
@@ -215,12 +233,12 @@ float node:: calc_split_cont()
     vector<int> attr_pos, attr_neg;
     for(vector<string>::iterator it=cont_values.begin(); it!=cont_values.end(); att_num++,it++)
     {
- //       if(!checked.test(att_num))
+        if(!checked.test(att_num))
         {
             attr=(*it);
             temp_ent=100000;
-            b=checked;
-            b.set(att_num);
+//            b=checked;
+//            b.set(att_num);
             attr_pos.clear();
             attr_neg.clear();
 
@@ -248,6 +266,8 @@ float node:: calc_split_cont()
                     temp_ent=(float)((pt+nt)/(attr_pos.size()+attr_neg.size())*(::calc_entropy(pt,nt)) + (attr_pos.size()+attr_neg.size()-pt-nt)/(attr_pos.size()+attr_neg.size())*(::calc_entropy(attr_pos.size()-pt,attr_neg.size()-nt)));
                     if(child_ent>temp_ent)
                     {
+                        if((nt==0&&pt==0)||(nt==attr_neg.size()&&pt==attr_pos.size()))
+                            noise_check=true;
                         child_ent=temp_ent;
                         cont_split_attr=attr;
                         split_value=(attr_pos[pt-1]+attr_neg[nt])/2;
@@ -264,6 +284,8 @@ float node:: calc_split_cont()
                     temp_ent=(float)((pt+nt)/(attr_pos.size()+attr_neg.size())*(::calc_entropy(pt,nt)) + (attr_pos.size()+attr_neg.size()-pt-nt)/(attr_pos.size()+attr_neg.size())*(::calc_entropy(attr_pos.size()-pt,attr_neg.size()-nt)));
                     if(child_ent>temp_ent)
                     {
+                        if((nt==0&&pt==0)||(nt==attr_neg.size()&&pt==attr_pos.size()))
+                            noise_check=true;
                         child_ent=temp_ent;
                         cont_split_attr=attr;
                         split_value=(attr_pos[pt]+attr_neg[nt-1])/2;
@@ -279,6 +301,8 @@ float node:: calc_split_cont()
                     temp_ent=(float)((pt+nt)/(attr_pos.size()+attr_neg.size())*(::calc_entropy(pt,nt)) + (attr_pos.size()+attr_neg.size()-pt-nt)/(attr_pos.size()+attr_neg.size())*(::calc_entropy(attr_pos.size()-pt,attr_neg.size()-nt)));
                     if(child_ent>temp_ent)
                     {
+                        if((nt==0&&pt==0)||(nt==attr_neg.size()&&pt==attr_pos.size()))
+                            noise_check=true;
                         child_ent=temp_ent;
                         cont_split_attr=attr;
                         if(!(pt==attr_pos.size() && nt==attr_neg.size()))
@@ -360,6 +384,7 @@ float node::prune()
                 return ((float)nnegt)/(npost+nnegt);
             else if(disc_split_attr==">50K")
                 return ((float)npost)/(npost+nnegt);
+            cout<<"\nError";
             return 0;
         }
         else
@@ -368,10 +393,15 @@ float node::prune()
 
             for(map<string,node>::iterator it=disc_children.begin(); it!=disc_children.end();++it)
                 (it->second).clear();
+
             for(vector<adult*>::iterator jt=pos_list.begin(); jt!=pos_list.end(); ++jt)
-                disc_children[(*jt)->ask_disc(disc_split_attr)].add_pos(*jt);
+                if(disc_children.count((*jt)->ask_disc(disc_split_attr)))
+                    disc_children[(*jt)->ask_disc(disc_split_attr)].add_pos(*jt);
+
             for(vector<adult*>::iterator jt=neg_list.begin(); jt!=neg_list.end(); ++jt)
-                disc_children[(*jt)->ask_disc(disc_split_attr)].add_neg(*jt);
+                if(disc_children.count((*jt)->ask_disc(disc_split_attr)))
+                    disc_children[(*jt)->ask_disc(disc_split_attr)].add_neg(*jt);
+
             float count_known=npost+nnegt-disc_children["?"].npost-disc_children["?"].nnegt;
             disc_children.erase("?");
 
@@ -399,7 +429,7 @@ float node::prune()
     {
         if(cont_children.empty())
         {
-            if(cont_split_attr=="Noise")
+/*           if(cont_split_attr=="Noise")
             {
                 disc_children.clear();
                 split_type_disc=true;
@@ -413,7 +443,8 @@ float node::prune()
                     disc_split_attr="<=50K";
                     return ((float)nnegt)/(npost+nnegt);
                 }
-            }
+            }*/
+            cout<<"\nError 2";
             return 0;
         }
         else
@@ -505,13 +536,44 @@ void node::show(int in_ite)
 //        cout<<endl<<endl<<"Splitting "<<it->first<<" under "<<split_attr;
             cout<<"\n";
             for(int i=0; i<ite;++i) cout<<"\t";
-            cout<<"<="<<it->first;
+            cout<<"  <="<<it->first;
             ((it->second).first).show(ite+1);
             cout<<"\n";
             for(int i=0; i<ite;++i) cout<<"\t";
-            cout<<">"<<it->first;
+            cout<<"  >"<<it->first;
             ((it->second).second).show(ite+1);
         }
 
+    }
+}
+
+bool node::test(adult ad)
+{
+    if(end_of_tree)
+    {
+        if(disc_split_attr=="<=50K")
+            return false;
+        else if(disc_split_attr==">50K")
+            return true;
+        cout<<"Error 3";
+        return false;
+    }
+    if(split_type_disc)
+    {
+//        cout<<endl<<disc_split_attr;
+        if(disc_children.empty())
+            cout<<"Error 1";
+        if(disc_children.count(ad.ask_disc(disc_split_attr)))
+            return disc_children[ad.ask_disc(disc_split_attr)].test(ad);
+        else return false;
+    }
+    else
+    {
+//        cout<<endl<<cont_split_attr;
+        if(cont_children.empty())
+            cout<<"Error 2";
+        if(ad.ask_cont(cont_split_attr)<=(cont_children.begin())->first)
+            return (cont_children.begin())->second.first.test(ad);
+        else return (cont_children.begin())->second.second.test(ad);
     }
 }

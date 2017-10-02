@@ -22,7 +22,8 @@ class node
         void clear();
         float prune();
         void show(int);
-
+        bool test(adult);
+        void setbit(bitset<15>);
     protected:
 
     private:
@@ -38,7 +39,6 @@ class node
         float calc_split_disc();
         float calc_split_cont();
 
-        void setbit(bitset<15>);
 
 
 };

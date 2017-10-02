@@ -11,12 +11,15 @@ class adult_data
         void parse(string);
         void prune (string);
         void check(string);
+        void random_forest(int, string);
+        void test_forest(string);
     protected:
 
     private:
         void load(string);
         int n;
         node root;
+        vector <node> forest;
         vector <adult> data;
 };
 
